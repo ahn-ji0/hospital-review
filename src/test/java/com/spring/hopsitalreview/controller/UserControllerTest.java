@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.hopsitalreview.domain.dto.UserDto;
 import com.spring.hopsitalreview.domain.dto.UserJoinRequest;
+import com.spring.hopsitalreview.exception.ErrorCode;
+import com.spring.hopsitalreview.exception.HospitalReviewException;
 import com.spring.hopsitalreview.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,13 +54,12 @@ class UserControllerTest {
     void join2() throws Exception {
         UserJoinRequest userJoinRequest = new UserJoinRequest("jiyoung","1234","jy@naver.com");
 
-        given(userService.join(any())).willReturn(new UserDto(1l,userJoinRequest.getUserName(),userJoinRequest.getEmail()));
-
+        given(userService.join(any())).willThrow(new HospitalReviewException(ErrorCode.DUPLICATE_USER_NAME,"중복입니다."));
         mockMvc.perform(post("/api/v1/users/join")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(userJoinRequest))
                 )
-                .andExpect(status().isOk())
+                .andExpect(status().isConflict())
                 .andDo(print());
     }
 }
