@@ -8,7 +8,9 @@ import com.spring.hopsitalreview.domain.dto.UserLoginRequest;
 import com.spring.hopsitalreview.exception.ErrorCode;
 import com.spring.hopsitalreview.exception.HospitalReviewException;
 import com.spring.hopsitalreview.repository.UserRepository;
+import com.spring.hopsitalreview.util.JwtTokenUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,11 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
+
+    @Value("${jwt.token.secret}")
+    private String secretKey;
+    private long expireTimeMs = 1000 * 60 * 60; //1시간
+
     public UserDto join(UserJoinRequest userJoinRequest){
         //회원 userName 중복 체크
         userRepository.findByUserName(userJoinRequest.getUserName())
@@ -30,7 +37,14 @@ public class UserService {
 
     public String login(UserLoginRequest userLoginRequest) {
         //User Name 있는 지 확인 -> 없으면 NOT_FOUND 예외처리
-        User user = userRepository.findByUserName(userLoginRequest.getUserName()).orElseThrow(()-> new HospitalReviewException(ErrorCode.NOT_FOUND,"존재하지 않는 유저입니다."));
-        return "";
+        User user = userRepository.findByUserName(userLoginRequest.getUserName())
+                .orElseThrow(()-> new HospitalReviewException(ErrorCode.NOT_FOUND,"존재하지 않는 유저입니다."));
+
+        //password가 일치하는 지 확인 -> 일치하지 않으면 INVALID_PASSWORD 예외처리
+        if(!encoder.matches(userLoginRequest.getPassword(),user.getPassword())){
+            throw new HospitalReviewException(ErrorCode.INVALID_PASSWORD,"비밀번호가 일치하지 않습니다.");
+        }
+
+        return JwtTokenUtils.createToken(userLoginRequest.getUserName(), secretKey, expireTimeMs);
     }
 }
