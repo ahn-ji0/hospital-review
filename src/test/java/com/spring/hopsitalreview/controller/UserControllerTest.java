@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.hopsitalreview.domain.dto.UserDto;
 import com.spring.hopsitalreview.domain.dto.UserJoinRequest;
+import com.spring.hopsitalreview.domain.dto.UserLoginRequest;
 import com.spring.hopsitalreview.exception.ErrorCode;
 import com.spring.hopsitalreview.exception.HospitalReviewException;
 import com.spring.hopsitalreview.service.UserService;
@@ -64,6 +65,20 @@ class UserControllerTest {
                         .content(objectMapper.writeValueAsBytes(userJoinRequest))
                 )
                 .andExpect(status().isConflict())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("login 실패(비밀번호 일치 안함) 테스트")
+    @WithMockUser
+    void login_fail() throws Exception {
+        UserLoginRequest userLoginRequest = new UserLoginRequest("choco","1234");
+        given(userService.login(any())).willThrow(new HospitalReviewException(ErrorCode.INVALID_PASSWORD,"패스워드가 다릅니다."));
+
+        mockMvc.perform(post("/api/v1/users/login").with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsBytes(userLoginRequest)))
+                .andExpect(status().isBadRequest())
                 .andDo(print());
     }
 }
