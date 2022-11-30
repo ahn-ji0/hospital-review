@@ -4,6 +4,7 @@ import com.spring.hopsitalreview.domain.User;
 import com.spring.hopsitalreview.domain.dto.UserDto;
 import com.spring.hopsitalreview.domain.dto.UserJoinRequest;
 import com.spring.hopsitalreview.domain.dto.UserJoinResponse;
+import com.spring.hopsitalreview.domain.dto.UserLoginRequest;
 import com.spring.hopsitalreview.exception.ErrorCode;
 import com.spring.hopsitalreview.exception.HospitalReviewException;
 import com.spring.hopsitalreview.repository.UserRepository;
@@ -25,5 +26,11 @@ public class UserService {
         User savedUser = userRepository.save(userJoinRequest.toEntity(encoder.encode(userJoinRequest.getPassword())));
         UserDto userDto = User.of(savedUser);
         return userDto;
+    }
+
+    public String login(UserLoginRequest userLoginRequest) {
+        //User Name 있는 지 확인 -> 없으면 NOT_FOUND 예외처리
+        User user = userRepository.findByUserName(userLoginRequest.getUserName()).orElseThrow(()-> new HospitalReviewException(ErrorCode.NOT_FOUND,"존재하지 않는 유저입니다."));
+        return "";
     }
 }
