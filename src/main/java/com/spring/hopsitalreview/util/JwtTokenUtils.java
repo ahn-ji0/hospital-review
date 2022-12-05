@@ -14,6 +14,9 @@ public class JwtTokenUtils {
         Date expiredDate = extractClaims(token,secretKey).getExpiration();
         return expiredDate.before(new Date());
     }
+    public static String getUserName(String token, String key){
+        return extractClaims(token,key).get("userName").toString();
+    }
     public static String createToken(String userName, String key, long expireTimeMs){
         Claims claims = Jwts.claims();
         claims.put("userName",userName);
