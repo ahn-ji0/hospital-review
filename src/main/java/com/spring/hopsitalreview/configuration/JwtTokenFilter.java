@@ -1,5 +1,6 @@
 package com.spring.hopsitalreview.configuration;
 
+import com.spring.hopsitalreview.domain.User;
 import com.spring.hopsitalreview.service.UserService;
 import com.spring.hopsitalreview.util.JwtTokenUtils;
 import lombok.RequiredArgsConstructor;
@@ -55,8 +56,15 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             return;
         }
 
-        //위의 경우를 제외하고 허용
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken("", null, List.of(new SimpleGrantedAuthority("USER")));
+        String userName = JwtTokenUtils.getUserName(token,secretKey);
+        log.info("userName = {}",userName);
+
+        //user detail 가져오기
+        User user = userService.getUserByUserName(userName);
+        log.info("userRole:{}",user.getRole());
+
+        //위의 경우를 제외하고 허가
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUserName(), null, List.of(new SimpleGrantedAuthority(user.getRole().name())));
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken); //권한 부여
         filterChain.doFilter(request, response); //다음 체인으로 넘어간다.
