@@ -6,10 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,6 +20,9 @@ public class User {
     private String userName;
     private String password;
     private String emailAddress;
+
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     public static UserDto of(User user){
         return UserDto.builder()
