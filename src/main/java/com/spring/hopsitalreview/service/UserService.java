@@ -47,4 +47,8 @@ public class UserService {
 
         return JwtTokenUtils.createToken(userLoginRequest.getUserName(), secretKey, expireTimeMs);
     }
+    public User getUserByUserName(String userName){
+        return userRepository.findByUserName(userName)
+                .orElseThrow(()->new HospitalReviewException(ErrorCode.NOT_FOUND,"존재하지 않는 유저입니다."));
+    }
 }
