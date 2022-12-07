@@ -1,6 +1,7 @@
 package com.spring.hopsitalreview.domain.dto;
 
 import com.spring.hopsitalreview.domain.User;
+import com.spring.hopsitalreview.domain.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class UserJoinRequest {
                 .userName(this.userName)
                 .password(password)
                 .emailAddress(this.email)
+                .role(UserRole.USER)
                 .build();
     }
 }
