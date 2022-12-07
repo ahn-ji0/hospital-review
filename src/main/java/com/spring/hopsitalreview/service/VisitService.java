@@ -1,6 +1,8 @@
 package com.spring.hopsitalreview.service;
 
 import com.spring.hopsitalreview.domain.dto.VisitCreateRequest;
+import com.spring.hopsitalreview.domain.dto.VisitCreateResponse;
+import com.spring.hopsitalreview.domain.dto.VisitResponse;
 import com.spring.hopsitalreview.domain.entity.Disease;
 import com.spring.hopsitalreview.domain.entity.Hospital;
 import com.spring.hopsitalreview.domain.entity.User;
@@ -15,7 +17,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +30,7 @@ public class VisitService {
     private final HospitalRepository hospitalRepository;
     private final DiseaseRepository diseaseRepository;
 
-    public Visits create(VisitCreateRequest visitCreateRequest, String userName){
+    public VisitCreateResponse create(VisitCreateRequest visitCreateRequest, String userName){
         //유저가 있는지 확인
         User user = userRepository.findByUserName(userName).orElseThrow(()->
                 new HospitalReviewException(ErrorCode.NOT_FOUND,"존재하지 않는 유저입니다."));
@@ -52,6 +56,32 @@ public class VisitService {
                 .cost(visitCreateRequest.getCost())
                 .build());
 
-        return savedVisits;
+        return Visits.of(savedVisits);
+    }
+
+    public List<VisitResponse> list() {
+        List<Visits> visitsList = visitRepository.findAll();
+        List<VisitResponse> visitResponseList = visitsList.stream()
+                .map(visits -> VisitResponse.of(visits))
+                .collect(Collectors.toList());
+        return visitResponseList;
+    }
+
+    public List<VisitResponse> listByUser(Long id) {
+        User savedUser = userRepository.findById(id).orElseThrow(()->new HospitalReviewException(ErrorCode.NOT_FOUND, "해당 유저가 없습니다."));
+        List<Visits> visitsList = visitRepository.findByUser(savedUser);
+        List<VisitResponse> visitResponseList = visitsList.stream()
+                .map(visits -> VisitResponse.of(visits))
+                .collect(Collectors.toList());
+        return visitResponseList;
+    }
+
+    public List<VisitResponse> listByHospital(Long id) {
+        Hospital savedHospital = hospitalRepository.findById(id).orElseThrow(()->new HospitalReviewException(ErrorCode.NOT_FOUND, "해당 병원이 없습니다."));
+        List<Visits> visitsList = visitRepository.findByHospital(savedHospital);
+        List<VisitResponse> visitResponseList = visitsList.stream()
+                .map(visits -> VisitResponse.of(visits))
+                .collect(Collectors.toList());
+        return visitResponseList;
     }
 }
