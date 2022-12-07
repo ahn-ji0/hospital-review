@@ -4,7 +4,6 @@
 ## ER 다이어그램
 ![img.png](img.png)
 
-****
 ## User
 ### 회원가입 
 POST /api/v1/users/join
@@ -14,12 +13,11 @@ POST /api/v1/users/join
 POST /api/v1/users/login
 - userName, password 일치 시 토큰 발급
 
-***
 ## Hospital
 ### 병원 조회
 GET /api/v1/hospitals/{id}
 - 병원 id로 조회 시 id, hospitalName, RoadNameAddress 응답
-****
+
 ## Visits
 ### 방문 기록 남기기
 
