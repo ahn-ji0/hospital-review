@@ -12,12 +12,14 @@ import com.spring.hopsitalreview.repository.HospitalRepository;
 import com.spring.hopsitalreview.repository.UserRepository;
 import com.spring.hopsitalreview.repository.VisitRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class VisitService {
     private final VisitRepository visitRepository;
     private final UserRepository userRepository;
@@ -30,7 +32,7 @@ public class VisitService {
                 new HospitalReviewException(ErrorCode.NOT_FOUND,"존재하지 않는 유저입니다."));
 
         //병원이 있는 지 확인
-        Hospital hospital = hospitalRepository.findByHospitalName(visitCreateRequest.getHospitalName())
+        Hospital hospital = hospitalRepository.findById(visitCreateRequest.getHospitalId())
                 .orElseThrow(()->new HospitalReviewException(ErrorCode.NOT_FOUND, "존재하지 않는 병원입니다."));
 
         //병명이 있는 지 확인
