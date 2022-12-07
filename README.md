@@ -9,3 +9,6 @@
 ### /api/v1/users/login
 로그인
 - userName, password 일치 시 토큰 발급
+
+## ER 다이어그램
+![img.png](img.png)
