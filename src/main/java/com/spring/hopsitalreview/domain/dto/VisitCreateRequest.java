@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class VisitCreateRequest {
-    private String hospitalName;
+    private Long hospitalId;
     private String diseaseName;
     private float cost;
 }
