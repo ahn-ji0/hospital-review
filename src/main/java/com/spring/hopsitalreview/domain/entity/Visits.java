@@ -19,15 +19,15 @@ public class Visits {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "disease_id")
     private Disease disease;
 
     private float cost;
