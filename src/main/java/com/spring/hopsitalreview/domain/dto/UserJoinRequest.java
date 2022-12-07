@@ -1,7 +1,7 @@
 package com.spring.hopsitalreview.domain.dto;
 
-import com.spring.hopsitalreview.domain.User;
-import com.spring.hopsitalreview.domain.UserRole;
+import com.spring.hopsitalreview.domain.entity.User;
+import com.spring.hopsitalreview.domain.entity.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

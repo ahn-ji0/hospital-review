@@ -1,9 +1,8 @@
 package com.spring.hopsitalreview.service;
 
-import com.spring.hopsitalreview.domain.User;
+import com.spring.hopsitalreview.domain.entity.User;
 import com.spring.hopsitalreview.domain.dto.UserDto;
 import com.spring.hopsitalreview.domain.dto.UserJoinRequest;
-import com.spring.hopsitalreview.domain.dto.UserJoinResponse;
 import com.spring.hopsitalreview.domain.dto.UserLoginRequest;
 import com.spring.hopsitalreview.exception.ErrorCode;
 import com.spring.hopsitalreview.exception.HospitalReviewException;

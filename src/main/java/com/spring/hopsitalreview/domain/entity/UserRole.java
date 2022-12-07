@@ -1,4 +1,4 @@
-package com.spring.hopsitalreview.domain;
+package com.spring.hopsitalreview.domain.entity;
 
 import lombok.AllArgsConstructor;
 

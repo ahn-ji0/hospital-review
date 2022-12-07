@@ -1,6 +1,6 @@
 package com.spring.hopsitalreview.repository;
 
-import com.spring.hopsitalreview.domain.User;
+import com.spring.hopsitalreview.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

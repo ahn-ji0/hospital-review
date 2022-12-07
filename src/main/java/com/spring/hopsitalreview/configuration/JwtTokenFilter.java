@@ -1,6 +1,6 @@
 package com.spring.hopsitalreview.configuration;
 
-import com.spring.hopsitalreview.domain.User;
+import com.spring.hopsitalreview.domain.entity.User;
 import com.spring.hopsitalreview.service.UserService;
 import com.spring.hopsitalreview.util.JwtTokenUtils;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
