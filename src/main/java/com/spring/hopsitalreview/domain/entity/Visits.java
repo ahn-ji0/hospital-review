@@ -1,5 +1,6 @@
 package com.spring.hopsitalreview.domain.entity;
 
+import com.spring.hopsitalreview.domain.dto.VisitCreateResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,7 +30,16 @@ public class Visits {
     @JoinColumn(name = "id")
     private Disease disease;
 
-    private Long cost;
+    private float cost;
 
 
+    public static VisitCreateResponse of(Visits visits) {
+        return VisitCreateResponse.builder()
+                .id(visits.getId())
+                .hospitalName(visits.getHospital().getHospitalName())
+                .userName(visits.getUser().getUserName())
+                .diseaseName(visits.getDisease().getDiseaseName())
+                .cost(visits.getCost())
+                .build();
+    }
 }
