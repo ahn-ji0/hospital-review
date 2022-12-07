@@ -29,5 +29,7 @@ public class Visits {
     @JoinColumn(name = "id")
     private Disease disease;
 
+    private Long cost;
+
 
 }
