@@ -1,10 +1,7 @@
 package com.spring.hopsitalreview.domain.entity;
 
 import com.spring.hopsitalreview.domain.dto.VisitCreateResponse;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,7 +10,9 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Builder
-public class Visits {
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+public class Visits extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
