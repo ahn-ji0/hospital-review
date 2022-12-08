@@ -1,4 +1,4 @@
-package com.spring.hopsitalreview.configuration;
+package com.spring.hopsitalreview.domain.entity;
 
 import lombok.Getter;
 import lombok.Setter;
