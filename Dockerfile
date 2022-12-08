@@ -25,6 +25,6 @@ ENTRYPOINT [                                                \
    "-jar",                                                 \
    "-Djava.security.egd=file:/dev/./urandom",              \
    "-Dsun.net.inetaddr.ttl=0",                             \
-   "hospital-review-0.0.1-SNAPSHOT.jar"              \
+   "hopsital-review-0.0.1-SNAPSHOT.jar"              \
 ]
 
